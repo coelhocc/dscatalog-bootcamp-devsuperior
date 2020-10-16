@@ -5,16 +5,18 @@ import './styles.scss';
 import { makeRequest } from 'core/utils/request';
 import { ProductsResponse } from 'core/types/Product';
 import ProductCardLoader from './components/Loaders/ProductCardLoader';
+import Pagination from 'core/componets/Pagination';
 
 const Catalog = () => {
 
   const [productsResponse, setProductsResponse] = useState<ProductsResponse>();
   const [isLoading, setIsLoading] = useState(false);
+  const [activePage, setActivePage] = useState(0);
 
   //Através do userEffect é possívell acessar o ciclo de vida do componente.
   useEffect(() => {
     const params = {
-      page: 0,
+      page: activePage,
       linesPerPage: 12
     }
 
@@ -24,7 +26,7 @@ const Catalog = () => {
     .finally(() => {
       setIsLoading(false);
     });
-  }, []);
+  }, [activePage]);
 
   return (
     <div className="catalog-container">
@@ -39,6 +41,13 @@ const Catalog = () => {
           </Link>
         )))}
       </div>
+      {productsResponse && (
+      <Pagination 
+        totalPages={productsResponse.totalPages}
+        activePage={activePage} 
+        onChange={page => setActivePage(page)}
+      />
+      )}
     </div>
   );
 }
