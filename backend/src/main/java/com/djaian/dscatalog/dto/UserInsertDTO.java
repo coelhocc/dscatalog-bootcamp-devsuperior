@@ -1,5 +1,8 @@
 package com.djaian.dscatalog.dto;
 
+import com.djaian.dscatalog.services.validation.UserInsertValid;
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO {
 	private static final long serialVersionUID = 1L;
 	
